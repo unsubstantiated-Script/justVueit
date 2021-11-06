@@ -5,8 +5,15 @@ const app = Vue.createApp({
 			name: "",
 		};
 	},
+	computed: {
+		fullName() {
+			if (this.name.length > 0) {
+				return `${this.name} Fultonator`;
+			}
+		},
+	},
 	methods: {
-		setName(event, lastName) {
+		setName(event) {
 			this.name = event.target.value;
 		},
 		add(num) {

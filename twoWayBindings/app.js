@@ -3,12 +3,34 @@ const app = Vue.createApp({
 		return {
 			counter: 0,
 			name: "",
+			lastName: "",
+			//fullName: "",
 		};
+	},
+	watch: {
+		counter(value) {
+			if (value > 50) {
+				const that = this;
+				setTimeout(function () {
+					that.counter = 0;
+				}, 2000);
+			}
+		},
+		// name(value) {
+		// 	if (value.length > 0) {
+		// 		this.fullName = `${value} ${this.lastName}`;
+		// 	}
+		// },
+		// lastName(value) {
+		// 	if (value.length > 0) {
+		// 		this.fullName = `${this.name} ${value}`;
+		// 	}
+		// },
 	},
 	computed: {
 		fullName() {
-			if (this.name.length > 0) {
-				return `${this.name} Fultonator`;
+			if (this.name.length > 0 && this.lastName.length > 0) {
+				return `${this.name} ${this.lastName}`;
 			}
 		},
 	},

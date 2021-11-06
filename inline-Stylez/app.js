@@ -6,6 +6,11 @@ const app = Vue.createApp({
 			boxCSelected: false,
 		};
 	},
+	computed: {
+		boxAClasses() {
+			return { active: this.boxASelected };
+		},
+	},
 	methods: {
 		boxSelected(box) {
 			switch (box) {
@@ -13,10 +18,10 @@ const app = Vue.createApp({
 					this.boxASelected = !this.boxASelected;
 					break;
 				case "B":
-					this.boxBSelected = !this.boxASelected;
+					this.boxBSelected = !this.boxBSelected;
 					break;
 				case "C":
-					this.boxCSelected = !this.boxASelected;
+					this.boxCSelected = !this.boxCSelected;
 					break;
 
 				default:

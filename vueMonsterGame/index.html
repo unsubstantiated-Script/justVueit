@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Mario Vs. StormTrooper</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="stylesheet" href="styles.css" />
+		<script src="https://unpkg.com/vue@next" defer></script>
+		<script src="app.js" defer></script>
+	</head>
+	<body>
+		<header>
+			<h1>Mario Vs. StormTrooper</h1>
+		</header>
+		<div id="game">
+			<div class="game-box">
+				<section id="player" class="container">
+					<img src="./img/itsAMee.png" alt="mario avatar" />
+					<h2>Mario Health</h2>
+					<div class="healthbar">
+						<div class="healthbar__value" :style="marioBarStyles"></div>
+					</div>
+				</section>
+				<section id="monster" class="container">
+					<img src="./img/pewpewmiss.png" alt="stormtrooper avatar" />
+					<h2>StormTrooper Health</h2>
+					<div class="healthbar">
+						<div class="healthbar__value" :style="stormtrooperBarStyles"></div>
+					</div>
+				</section>
+			</div>
+			<section class="container" v-if="winner">
+				<h2>Game Over!</h2>
+				<h2 v-if="winner === 'stormtrooper'">
+					The Storm Trooper pulled off a lucky shot!
+				</h2>
+				<h2 v-else-if="winner === 'mario'">
+					Mario stomps the Storm Trooper into the ground!
+				</h2>
+				<h2 v-else>It's a Draw!</h2>
+				<button @click="startNewGame">Start New Game</button>
+			</section>
+			<section v-if="!winner" id="controls">
+				<button @click="attackStormtrooper">ATTACK</button>
+				<button :disabled="enableBonus" @click="specialAttack">
+					SPECIAL ATTACK
+				</button>
+				<button :disabled="enableBonus" @click="healMario">HEAL</button>
+				<button @click="giveInToTheDarkside">SURRENDER</button>
+			</section>
+			<section id="log" class="container">
+				<h2>Battle Log</h2>
+				<ul>
+					<li v-for="log in logMessages">
+						<span
+							:class="{'log--mario':log.who === 'Mario' , 'log--stormtrooper': log.who === 'StormTrooper'}"
+							>{{log.who}}&nbsp;</span
+						>
+						<span v-if="log.what === 'mushroom'">
+							uses "{{log.what}}"
+							<span class="log--heal">{{log.value}}</span></span
+						>
+						<span v-else
+							>uses "{{log.what}}"
+							<span class="log--damage">{{log.value}}</span></span
+						>
+					</li>
+				</ul>
+			</section>
+		</div>
+	</body>
+</html>

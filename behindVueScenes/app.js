@@ -10,12 +10,56 @@ const app = Vue.createApp({
 			this.currentUserInput = event.target.value;
 		},
 		setText() {
-			this.message = this.currentUserInput;
+			//this.message = this.currentUserInput;
+			//Grabbing the ref from the HTMl
+			this.message = this.$refs.userText.value;
 		},
+	},
+	beforeCreate() {
+		console.log("beforeCreate()");
+	},
+	created() {
+		console.log("created()");
+	},
+	beforeMount() {
+		console.log("beforeMount()");
+	},
+	mounted() {
+		console.log("mounted()");
+	},
+	beforeUpdate() {
+		console.log("beforeUpdate()");
+	},
+	updated() {
+		console.log("updated()");
+	},
+	beforeUnmount() {
+		console.log("beforeUnmount()");
+	},
+	unmounted() {
+		console.log("unmounted()");
 	},
 });
 
 app.mount("#app");
+
+setTimeout(() => {
+	app.unmount("#app");
+}, 3000);
+//rarely used
+
+//Cannot share data between apps
+const app2 = Vue.createApp({
+	template: `<p>{{ favoriteMeal }}</p>`,
+	data() {
+		return {
+			favoriteMeal: "pizza",
+		};
+	},
+	// methods: {},
+});
+
+app2.mount("#app2");
 
 //Some proxy testings
 

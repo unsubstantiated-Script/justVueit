@@ -1,6 +1,6 @@
 <template>
   <li>
-    <h2>{{ name }} {{ friendIsFav ? "(Favorite)" : "" }}</h2>
+    <h2>{{ name }} {{ isFavorite ? "(Favorite)" : "" }}</h2>
     <button @click="toggleDetails">
       {{ detailsAreVisible ? "Hide" : "Show" }} Details
     </button>
@@ -24,6 +24,10 @@ export default {
   // props: ["name", "phone", "email", "isFavorite"],
   //Less messy proptypes...
   props: {
+    id: {
+      type: String,
+      required: true,
+    },
     name: {
       type: String,
       required: true,
@@ -47,11 +51,22 @@ export default {
       // },
     },
   },
+  emits: ["toggle-favorite"],
+  //Another more detailed way
+  // emits: {
+  //   "toggle-favorite": function (id) {
+  //     if (id) {
+  //       return true;
+  //     } else {
+  //       console.warn("Id is missing");
+  //     }
+  //   },
+  // },
   data() {
     return {
       detailsAreVisible: false,
       // Reassigning an item to avoid redeclaring a prop passed through
-      friendIsFav: this.isFavorite,
+      // friendIsFav: this.isFavorite,
     };
   },
   methods: {
@@ -59,7 +74,9 @@ export default {
       this.detailsAreVisible = !this.detailsAreVisible;
     },
     toggleFavorite() {
-      this.friendIsFav = !this.friendIsFav;
+      //this.friendIsFav = !this.friendIsFav;
+      //emit needs the function you wanna pass as well as any other arguments
+      this.$emit("toggle-favorite", this.id);
 
       // if (this.friendIsFav === "1") {
       //   this.friendIsFav = "0";

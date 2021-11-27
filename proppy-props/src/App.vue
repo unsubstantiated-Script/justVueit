@@ -15,6 +15,7 @@
         :email="friend.email"
         :isFavorite="friend.isFavorite"
         @toggle-favorite="toggleFavoriteStatus"
+        @delete-friend="deleteFriend"
       />
     </ul>
   </section>
@@ -46,6 +47,10 @@ export default {
     toggleFavoriteStatus(friendId) {
       const foundFriend = this.friends.find((friend) => friend.id === friendId);
       foundFriend.isFavorite = !foundFriend.isFavorite;
+    },
+
+    deleteFriend(friendId) {
+      this.friends = this.friends.filter((friend) => friend.id !== friendId);
     },
 
     addContact(name, phone, email) {

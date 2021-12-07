@@ -15,6 +15,7 @@ Often, it's difficult to find a decent penshop online. Dropping links in Faceboo
 ### Installing
 
 - Clone repo and run "npm i" in the terminal
+- "npm run serve" to get it up and running after that
 
 ## Authors
 

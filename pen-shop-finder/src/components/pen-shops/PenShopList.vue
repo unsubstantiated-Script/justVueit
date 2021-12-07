@@ -12,12 +12,9 @@
 
 <script>
 import PenShopItem from './PenShopItem.vue';
+
 export default {
-  props: {
-    shops: {
-      type: Array,
-    },
-  },
+  inject: ['shops'],
   components: {
     PenShopItem,
   },

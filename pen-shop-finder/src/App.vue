@@ -1,34 +1,16 @@
 <template>
   <the-header title="Online Pen Shops"></the-header>
-  <pen-shop-list :shops="shops"> </pen-shop-list>
+  <the-shops></the-shops>
 </template>
 
 <script>
 import TheHeader from './components/layouts/TheHeader.vue';
-import PenShopList from './components/pen-shops/PenShopList.vue';
+import TheShops from './components/pen-shops/TheShops.vue';
 
 export default {
   components: {
-    PenShopList,
     TheHeader,
-  },
-  data() {
-    return {
-      shops: [
-        {
-          id: 'cult-pens',
-          title: 'Cult Pens',
-          description: 'UK based stationery shop',
-          link: 'https://www.cultpens.com/',
-        },
-        {
-          id: 'pure-pens',
-          title: 'Pure Pens',
-          description: 'Welsh stationery shop with a custom line of inks',
-          link: 'https://www.purepens.co.uk/',
-        },
-      ],
-    };
+    TheShops,
   },
 };
 </script>

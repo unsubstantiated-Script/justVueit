@@ -1,71 +1,169 @@
 <template>
+  <!-- Refs always convert to strings, v-model always keeps the input value data type. Something like v-model.number would force the conversion!
+  .lazy for updates after typing
+  .trim to clean up whitespace -->
   <form @submit.prevent="submitForm">
-    <div class="form-control">
+    <div
+      class="form-control"
+      :class="{ invalid: userNameValidity === 'invalid' }"
+    >
       <label for="user-name">Your Name</label>
-      <input id="user-name" name="user-name" type="text" v-model="userName" />
+      <input
+        id="user-name"
+        name="user-name"
+        type="text"
+        v-model.trim="userName"
+        @blur="validateInput"
+      />
+      <p v-if="userNameValidity === 'invalid'">Please enter a valid name!</p>
     </div>
     <div class="form-control">
       <label for="age">Your Age (Years)</label>
-      <input id="age" name="age" type="number" />
+      <input id="age" name="age" type="number" v-model="userAge" />
     </div>
     <div class="form-control">
       <label for="referrer">How did you hear about us?</label>
-      <select id="referrer" name="referrer">
+      <select id="referrer" name="referrer" v-model="referrer">
         <option value="google">Google</option>
         <option value="wom">Word of mouth</option>
         <option value="newspaper">Newspaper</option>
       </select>
     </div>
+
     <div class="form-control">
       <h2>What are you interested in?</h2>
       <div>
-        <input id="interest-news" name="interest" type="checkbox" />
+        <input
+          id="interest-news"
+          name="interest"
+          type="checkbox"
+          value="news"
+          v-model="interest"
+        />
         <label for="interest-news">News</label>
       </div>
       <div>
-        <input id="interest-tutorials" name="interest" type="checkbox" />
+        <input
+          id="interest-tutorials"
+          name="interest"
+          type="checkbox"
+          value="tutorials"
+          v-model="interest"
+        />
         <label for="interest-tutorials">Tutorials</label>
       </div>
       <div>
-        <input id="interest-nothing" name="interest" type="checkbox" />
+        <input
+          id="interest-nothing"
+          name="interest"
+          type="checkbox"
+          value="nothing"
+          v-model="interest"
+        />
         <label for="interest-nothing">Nothing</label>
       </div>
     </div>
     <div class="form-control">
       <h2>How do you learn?</h2>
       <div>
-        <input id="how-video" name="how" type="radio" />
+        <input
+          id="how-video"
+          name="how"
+          type="radio"
+          v-model="how"
+          value="videos"
+        />
         <label for="how-video">Video Courses</label>
       </div>
       <div>
-        <input id="how-blogs" name="how" type="radio" />
+        <input
+          id="how-blogs"
+          name="how"
+          type="radio"
+          v-model="how"
+          value="blogs"
+        />
         <label for="how-blogs">Blogs</label>
       </div>
       <div>
-        <input id="how-other" name="how" type="radio" />
+        <input
+          id="how-other"
+          name="how"
+          type="radio"
+          v-model="how"
+          value="other"
+        />
         <label for="how-other">Other</label>
       </div>
     </div>
+    <div class="form-control">
+      <rating-control v-model="rating"></rating-control>
+    </div>
+    <div class="form-control">
+      <div>
+        <input
+          id="confirm-terms"
+          name="confirm-terms"
+          type="checkbox"
+          value="news"
+          v-model="confirm"
+        />
+        <label for="confirm-terms">Agree to terms?</label>
+      </div>
+    </div>
     <div>
-      <button>Save Data</button>
+      <button :disabled="!confirm">Save Data</button>
     </div>
   </form>
 </template>
 
 <script>
 import { defineComponent } from '@vue/composition-api';
+import RatingControl from './RatingControl.vue';
 
 export default defineComponent({
+  components: {
+    RatingControl,
+  },
   data() {
     return {
       userName: '',
+      userAge: null,
+      referrer: 'wom',
+      // use arrays for check box lists to handle multiple selections...
+      interest: [],
+      how: null,
+      confirm: false,
+      rating: null,
+      userNameValidity: 'pending',
     };
   },
   methods: {
     submitForm() {
       console.log(this.userName);
+      console.log(this.userAge);
+      console.log(this.referrer);
+      console.log(this.interest);
+      console.log(this.how);
+      console.log(this.confirm);
+      console.log(this.rating);
+      // refs transmute stuff to strings
+      // console.log(this.$refs.ageInput.value + 5);
       // resetting after submitting
       this.userName = '';
+      this.userAge = null;
+      this.referrer = 'wom';
+      this.interest = null;
+      this.how = null;
+      this.confirm = false;
+      this.rating = null;
+    },
+    validateInput() {
+      if (this.userName === '') {
+        this.userNameValidity = 'invalid';
+      } else {
+        this.userNameValidity = 'valid';
+      }
     },
   },
 });
@@ -84,6 +182,15 @@ form {
 
 .form-control {
   margin: 0.5rem 0;
+}
+
+.form-control.invalid input {
+  border-color: red;
+}
+
+.form-control.invalid label,
+.form-control.invalid p {
+  color: red;
 }
 
 label {
@@ -133,5 +240,11 @@ button:hover,
 button:active {
   border-color: #002350;
   background-color: #002350;
+}
+
+button:disabled {
+  border-color: #ccc;
+  background-color: #ccc;
+  cursor: default;
 }
 </style>

@@ -3,6 +3,7 @@
     <pen-shop-item
       v-for="shop in shops"
       :key="shop.id"
+      :id="shop.id"
       :title="shop.title"
       :description="shop.description"
       :link="shop.link"

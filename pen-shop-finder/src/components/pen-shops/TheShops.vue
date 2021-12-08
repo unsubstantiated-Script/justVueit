@@ -9,7 +9,7 @@
       >Add a Store</base-button
     >
   </base-card>
-  <component :is="selectedTab"></component>
+  <keep-alive> <component :is="selectedTab"></component></keep-alive>
 </template>
 
 <script>
@@ -43,6 +43,9 @@ export default {
   provide() {
     return {
       shops: this.storedShops,
+      //sending to AddShop
+      addResource: this.addResource,
+      removeResource: this.removeResource,
     };
   },
   computed: {
@@ -56,6 +59,22 @@ export default {
   methods: {
     changeTab(tab) {
       this.selectedTab = tab;
+    },
+    addResource(title, description, link) {
+      const newResource = {
+        id: new Date().toISOString(),
+        title: title,
+        description: description,
+        link: link,
+      };
+      this.storedShops.unshift(newResource);
+      this.selectedTab = 'pen-shop-list';
+    },
+    removeResource(id) {
+      // filter method won't work here...so something mutative is needed
+      const resIndex = this.storedShops.findIndex((res) => res.id === id);
+      // splicing out just this element by it's id
+      this.storedShops.splice(resIndex, 1);
     },
   },
 };

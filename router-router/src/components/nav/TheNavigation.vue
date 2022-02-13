@@ -64,7 +64,9 @@ a {
 }
 
 a:hover,
-a:active {
+a:active,
+/* Some Vue JooJoo here! Coming from main.js */
+a.active {
   color: #f1a80a;
   border-color: #f1a80a;
   background-color: #1a037e;

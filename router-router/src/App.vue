@@ -4,8 +4,12 @@
   <main>
     <!-- <component :is="activePage"></component> -->
     <!-- This is where the routed view will get loaded. A form of templating -->
+    <!-- If router remains unnamed, it's the default -->
     <router-view></router-view>
   </main>
+  <footer>
+    <router-view name="footer"></router-view>
+  </footer>
 </template>
 
 <script>

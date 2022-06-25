@@ -1,30 +1,10 @@
 import { createApp } from 'vue';
 
-//Brining in the store for vuex
-import { createStore } from 'vuex';
-import App from './App.vue';
+import store from './store/index.js';
 
-// Configuring the store w/ an object
-const store = createStore({
-  //Global state
-  state() {
-    return {
-      counter: 0,
-    };
-  },
-  //Global methods. Can pass data with a second param called payload here
-  mutations: {
-    increment(state) {
-      state.counter = state.counter + 1;
-    },
-    decrement(state) {
-      state.counter = state.counter - 1;
-    },
-    increase(state, payload) {
-      state.counter = state.counter + payload.value;
-    },
-  },
-});
+//Brining in the store for vuex
+
+import App from './App.vue';
 
 const app = createApp(App);
 
